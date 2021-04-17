@@ -3,6 +3,7 @@ import re
 import argparse
 import subprocess
 import shutil
+import getpass
 
 def get_versions(path, ide_prefix):
     versions = []
@@ -40,17 +41,17 @@ def remove_lines_by_pattern(file_name, pattern):
 def main():
     parser = argparse.ArgumentParser(description='Reset IDE')
     parser.add_argument(
-        '-u', '--username', metavar='U', type=str, required=True,
-        help='username, that works with ide. This is required!')
-
-    parser.add_argument(
-        '-n', '--name', metavar='N', type=str, required=True,
-        help='ide name, example: phpstorm')
-
+        '-i', '--ide', type=str, required=False,
+        help='IDE name, example: phpstorm')
     args = parser.parse_args()
-    username = args.username
-    ide_name = args.name.lower()
+    username = getpass.getuser()
+    ide_name = args.ide
 
+    if (not ide_name):
+        print('Input IDE name, example: phpstorm')
+        ide_name = str(input())
+
+    ide_name = ide_name.lower()
     ide_prefix = ''
     if ide_name == 'clion':
         ide_prefix = 'CLion'
@@ -62,17 +63,22 @@ def main():
         ide_prefix = 'DataGrip'
 
     if (not ide_prefix):
-        print('Not found support ide')
+        print('Not found support IDE')
         exit()
 
-    config_path = f'/home/{username}/.config/JetBrains'
+    home_path = f'/home/{username}'
+    if (not os.path.exists(home_path)):
+        print('Not found user home path.')
+        exit()
+
+    config_path = f'{home_path}/.config/JetBrains'
     if (not os.path.exists(config_path)):
-        print('Not found config IDE. Check username or version IDE')
+        print('Not found config IDE. This script works with JetBrains IDEs are older than 2020')
         exit()
 
     current_version = get_current_version(config_path, ide_prefix)
     if (not current_version):
-        print('Not found current ide version')
+        print('Not found current IDE version')
         exit()
 
     config_ide_path = '{}/{}'.format(config_path, current_version)
@@ -92,10 +98,11 @@ def main():
         exit()
 
     try:
-        ide_java_conf = f'/home/{username}/.java/.userPrefs/jetbrains/{ide_name}/'
+        ide_java_conf = f'{home_path}/.java/.userPrefs/jetbrains/{ide_name}/'
         shutil.rmtree(ide_java_conf)
     except Exception as e:
         print('Not remove java settings, error: ' + str(e))
+        print('Maybe the script worked correctly, check your IDE')
         exit()
 
     print(f'Done! Reset {ide_name}!')
