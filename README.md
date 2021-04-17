@@ -1,11 +1,11 @@
 # Reset ide
 
-## Help
+## Run
 ```
-$ python3 reset_ide_2020.py -h
+$ python3 reset_ide_2020.py
 ```
 
-## Example
+## Run with flug
 Reset for ide `datagrip`
 ```
 $ python3 reset_ide_2020.py --ide datagrip
