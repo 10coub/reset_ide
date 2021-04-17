@@ -44,7 +44,6 @@ def main():
         '-i', '--ide', type=str, required=False,
         help='IDE name, example: phpstorm')
     args = parser.parse_args()
-    username = getpass.getuser()
     ide_name = args.ide
 
     if (not ide_name):
@@ -66,6 +65,7 @@ def main():
         print('Not found support IDE')
         exit()
 
+    username = getpass.getuser()
     home_path = f'/home/{username}'
     if (not os.path.exists(home_path)):
         print('Not found user home path.')
