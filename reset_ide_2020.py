@@ -60,7 +60,7 @@ def main():
         ide_prefix = 'PhpStorm'
     elif ide_name == 'datagrip':
         ide_prefix = 'DataGrip'
-    elif ide_name == 'intellij-idea-ultimate':
+    elif ide_name == 'idea':
         ide_prefix = 'IntelliJIdea'
 
     if (not ide_prefix):
