@@ -5,7 +5,7 @@
 python3 reset_ide_2020.py
 ```
 
-## Run with flug
+## Run with flag
 Examples:
 ```
 python3 reset_ide_2020.py --ide clion
