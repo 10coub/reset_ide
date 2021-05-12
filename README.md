@@ -2,11 +2,19 @@
 
 ## Run
 ```
-$ python3 reset_ide_2020.py
+python3 reset_ide_2020.py
 ```
 
 ## Run with flug
-Reset for ide `datagrip`
+Examples:
 ```
-$ python3 reset_ide_2020.py --ide datagrip
+python3 reset_ide_2020.py --ide clion
+
+python3 reset_ide_2020.py --ide goland
+
+python3 reset_ide_2020.py --ide phpstorm
+
+python3 reset_ide_2020.py --ide datagrip
+
+python3 reset_ide_2020.py --ide intellij-idea-ultimate
 ```

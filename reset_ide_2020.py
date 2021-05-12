@@ -60,6 +60,8 @@ def main():
         ide_prefix = 'PhpStorm'
     elif ide_name == 'datagrip':
         ide_prefix = 'DataGrip'
+    elif ide_name == 'intellij-idea-ultimate':
+        ide_prefix = 'IntelliJIdea'
 
     if (not ide_prefix):
         print('Not found support IDE')
