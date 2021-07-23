@@ -1,17 +1,16 @@
 import os
 import re
 import argparse
-import subprocess
 import shutil
 import getpass
 
 IDE_SUPPORT_LIST = [
-        {'id': '1', 'key': 'clion', 'name': 'CLion'},
-        {'id': '2', 'key': 'datagrip', 'name': 'DataGrip'},
-        {'id': '3', 'key': 'idea', 'name': 'IntelliJIdea'},
-        {'id': '4', 'key': 'goland', 'name': 'GoLand'},
-        {'id': '5', 'key': 'phpstorm', 'name': 'PhpStorm'},
-        ]
+    {'id': '1', 'key': 'clion', 'name': 'CLion'},
+    {'id': '2', 'key': 'datagrip', 'name': 'DataGrip'},
+    {'id': '3', 'key': 'idea', 'name': 'IntelliJIdea'},
+    {'id': '4', 'key': 'goland', 'name': 'GoLand'},
+    {'id': '5', 'key': 'phpstorm', 'name': 'PhpStorm'},
+]
 
 def print_ide_support_list():
     for item in IDE_SUPPORT_LIST:
@@ -95,10 +94,9 @@ def main():
         print('Not found current IDE version')
         exit()
 
-    config_ide_path = '{}/{}'.format(config_path, ide_version)
-
+    config_ide_version_path = '{}/{}'.format(config_path, ide_version)
     try:
-        evaluation_folder = '{}/eval/'.format(config_ide_path)
+        evaluation_folder = '{}/eval/'.format(config_ide_version_path)
         if (os.path.exists(evaluation_folder)):
             remove_files(evaluation_folder, '([a-zA-Z0-9]+)\.evaluation.key')
     except Exception as e:
@@ -106,16 +104,16 @@ def main():
         exit()
 
     try:
-        other_xml = '{}/options/other.xml'.format(config_ide_path)
+        other_xml = '{}/options/other.xml'.format(config_ide_version_path)
         if (os.path.exists(other_xml)):
             remove_lines(other_xml, 'evlsprt')
     except Exception as e:
         print('Not remove lines in {}, error: {}'.format(other_xml, str(e)))
         exit()
 
-    ide_java_conf = '{}/.java/.userPrefs/jetbrains/{}/'.format(home_path, ide_chosen.get('key'))
-    if (os.path.exists(ide_java_conf)):
-        shutil.rmtree(ide_java_conf)
+    java_conf = '{}/.java/.userPrefs/jetbrains/{}/'.format(home_path, ide_chosen.get('key'))
+    if (os.path.exists(java_conf)):
+        shutil.rmtree(java_conf)
 
     print('Done! Reset {}'.format(ide_chosen.get('name')))
 
